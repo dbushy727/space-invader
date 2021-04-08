@@ -1,0 +1,26 @@
+{
+  "name": "space-invader",
+  "version": "1.0.0",
+  "description": "<p align=\"center\">     <img title=\"Laravel Zero\" height=\"100\" src=\"https://raw.githubusercontent.com/laravel-zero/docs/master/images/logo/laravel-zero-readme.png\" /> </p>",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cy:run": "node_modules/.bin/cypress run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dbushy727/space-invader.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dbushy727/space-invader/issues"
+  },
+  "homepage": "https://github.com/dbushy727/space-invader#readme",
+  "devDependencies": {
+    "cypress": "^7.0.1"
+  }
+}
