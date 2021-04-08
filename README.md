@@ -7,6 +7,8 @@ This bot is utilizing two methods of crawling for different needs.
 ### Method 1
 This method checks product pages it already knows, and checks if their status changes to purchasable. This method utilizes Laravel Zero to simply fetch the site, and check the body for specific strings like "AVAILABLE SOON" or "SOLD OUT".
 
+This method also does a very dumb brute force crawl where it checks for product pages that exist with ids 1-100.
+
 Relevant code is in `app/Commands/PollSpaceInvader.php`
 
 ### Method 2
