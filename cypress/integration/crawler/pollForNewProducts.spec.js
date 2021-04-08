@@ -7,7 +7,7 @@ const isPageWeHaventSeen = path => !knownPages.includes(path);
 
 const notify = path => cy.request(
 	'post',
-	process.env.DISCORD_URL,
+	Cypress.env('DISCORD_URL'),
 	{ content: `Space Invader Hit: ${path}`, },
 );
 

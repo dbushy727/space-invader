@@ -5,3 +5,4 @@
 .phpunit.result.cache
 .env
 /node_modules
+cypress.env.json
