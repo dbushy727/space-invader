@@ -1,9 +1,15 @@
 const nextButtonSelector = '#controls a:nth-child(5)';
-const startingPage = 'https://space-invaders.com/spaceshop/product/21';
-const knownPages = ['https://space-invaders.com/spaceshop/product/21', 'https://space-invaders.com/spaceshop/product/30'];
+const isFirstPage = (path, startingPath) => path === startingPath;
+const isPageWeHaventSeen = (path, knownPaths) => !knownPaths.includes(path);
+const addPathToKnownPaths = (path, knownPaths) => {
+	if (knownPaths.includes(path)) {
+		return;
+	}
 
-const isFirstPage = path => path === startingPage;
-const isPageWeHaventSeen = path => !knownPages.includes(path);
+	knownPaths.push(path);
+	const json = JSON.stringify(knownPaths);
+	cy.writeFile('cypress/fixtures/knownPaths.json', json);
+};
 
 const notify = path => cy.request(
 	'post',
@@ -11,30 +17,34 @@ const notify = path => cy.request(
 	{ content: `Space Invader Hit: ${path}`, },
 );
 
-const checkNextPage = () => {
+const checkNextPage = (knownPaths, startingPath) => {
 	cy.get(nextButtonSelector)
 		.click()
 		.then(() => {
 			cy.location().then(loc => {
 				const path = loc.href;
 
-				if (isFirstPage(path)) {
+				if (isFirstPage(path, startingPath)) {
 					return;
 				}
 
-				if (isPageWeHaventSeen(path)) {
+				if (isPageWeHaventSeen(path, knownPaths)) {
+					addPathToKnownPaths(path, knownPaths);
 					notify(path);
-					return;
 				}
 
-				checkNextPage();
+				checkNextPage(knownPaths, startingPath);
 			});
 		});
 };
 
 describe('crawler', () => {
 	it('can check for new products by clicking on next product', () => {
-		cy.visit(startingPage).then(page => checkNextPage());
+		cy.readFile('cypress/fixtures/knownPaths.json').then(knownPaths => {
+			const startingPath = knownPaths[0];
+			cy.visit(startingPath).then(page => checkNextPage(knownPaths, startingPath));
+		});
+
 	});
 });
 

@@ -35,39 +35,8 @@ class PollSpaceInvader extends Command
      */
     public function handle()
     {
-        // $this->checkForNewProducts();
         $this->pollKnownProductPages();
         $this->pollUnknownProductPages();
-    }
-
-    protected function checkForNewProducts()
-    {
-        $this->browse(function ($browser) {
-            $url = sprintf("%s/%s", self::BASE_URL, self::KNOWN_PRODUCT_IDS[0]);
-            $firstProductLink = $browser->visit($url)
-                ->attribute('#controls a:last-of-type', 'href');
-
-            if ($this->isNewProductLink($firstProductLink)) {
-                $this->sendNotification("Hit: {$firstProductLink}");
-                return;
-            }
-
-            $browser->click('#controls a:last-of-type', 'href');
-            $nextProductLink = $browser->attribute('#controls a:last-of-type', 'href');
-
-            if ($this->isNewProductLink($nextProductLink)) {
-                $this->sendNotification("Hit: {$nextProductLink}");
-                return;
-            }
-
-            $browser->click('#controls a:last-of-type', 'href');
-            $finalProductLink = $browser->attribute('#controls a:last-of-type', 'href');
-
-            if ($this->isNewProductLink($finalProductLink)) {
-                $this->sendNotification("Hit: {$finalProductLink}");
-                return;
-            }
-        });
     }
 
     protected function pollKnownProductPages()
@@ -145,6 +114,6 @@ class PollSpaceInvader extends Command
      */
     public function schedule(Schedule $schedule): void
     {
-        $schedule->command(static::class)->everyFiveMinutes();
+        // $schedule->command(static::class)->everyFiveMinutes();
     }
 }
