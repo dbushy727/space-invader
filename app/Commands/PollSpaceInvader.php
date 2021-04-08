@@ -99,8 +99,8 @@ class PollSpaceInvader extends Command
         $response = Http::get($url);
         $body = $response->body();
 
-        if (str_contains($body, 'AVAILABLE<br>SOON')) {
-            $this->line('Page still contains AVAILABLE SOON');
+        if (str_contains($body, 'AVAILABLE<br>SOON') || str_contains($body, 'SOLD OUT')) {
+            $this->line('Page still contains AVAILABLE SOON or SOLD OUT');
             return;
         }
 
