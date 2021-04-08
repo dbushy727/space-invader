@@ -35,7 +35,7 @@ class PollSpaceInvader extends Command
      */
     public function handle()
     {
-        $this->checkForNewProducts();
+        // $this->checkForNewProducts();
         $this->pollKnownProductPages();
         $this->pollUnknownProductPages();
     }
