@@ -7,7 +7,7 @@ const isPageWeHaventSeen = path => !knownPages.includes(path);
 
 const notify = path => cy.request(
 	'post',
-	'https://discord.com/api/webhooks/826626110129176677/oBHMyl6gsECWacYk6YEzpeLMHIpWbLN1ePH8vrvAKseNEQUg8jR5YTab2mgXOE7UmXlU',
+	process.env.DISCORD_URL,
 	{ content: `Space Invader Hit: ${path}`, },
 );
 
